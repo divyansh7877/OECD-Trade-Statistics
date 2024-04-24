@@ -102,7 +102,7 @@ options = {
     'label': ['Oceania', 'Europe', 'North America', 'Asia', 'South America','Unknown', 'Africa']
 }
 fig = plt.figure(figsize=(16,16),dpi=400)
-nx.draw_networkx(G, pos=nx.circular_layout(G),**options)
+# nx.draw_networkx(G, pos=nx.circular_layout(G),**options)
 
 option_node_labels={'horizontalalignment' :'left',
                     'verticalalignment' :'center_baseline',
@@ -111,9 +111,9 @@ option_node_labels={'horizontalalignment' :'left',
 
 
 
-nx.draw_networkx_labels(G,pos=nx.circular_layout(G),**option_node_labels)
+# nx.draw_networkx_labels(G,pos=nx.circular_layout(G),**option_node_labels)
 
-plt.savefig('testimg.pdf',format='pdf')
+# plt.savefig('testimg.pdf',format='pdf')
 
 
 
