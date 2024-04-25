@@ -3,7 +3,8 @@ import streamlit as st
 import pandas as pd
 
 st.header('Matrix Based Analysis')
-
+st.beta_set_page_config( layout='wide')
+z
 df=pd.read_csv('Datasets for IV/modified_trade_data.csv')
 grouped = df.groupby(df.Frequency)
 df_annual = grouped.get_group("Annual")

@@ -7,7 +7,7 @@ import plotly.express as px
 
 st.header('Geo Plotting Import and Export Data')
 
-filepath=r'Datasets for IV\modified_trade_data.csv'
+filepath='Datasets for IV/modified_trade_data.csv'
 df=pd.read_csv(filepath)
 grouped = df.groupby(df.Frequency)
 df_annual = grouped.get_group("Annual")
