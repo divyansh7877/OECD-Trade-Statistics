@@ -1,6 +1,9 @@
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import networkx as nx
+from funcs import country_to_continent,continent_color,color_map
+from funcs import COLOR_DIC
 
 
 st.header('Continental Analysis')
@@ -14,9 +17,6 @@ freq = st.radio('Please select Freqency.',
                 ['Annual','Quarter'],
                 )
 
-# flow = st.radio('Please choose the flow type:',
-#                 ["Exports", "Imports"],
-#                 captions=['Trade sent by Reporter Country to Partner Country.', 'Trade recieved by Reporter Country from Partner Country.'])
 
 if freq=='Annual':
     df_plot=df_annual
@@ -32,3 +32,5 @@ continental['Imports']=df_plot[(df_plot['Flow']=='Imports') & (df_plot['Time']==
 
 st.write(f'Sum from each Continent in {time}(in USD)')
 st.dataframe(continental)
+
+

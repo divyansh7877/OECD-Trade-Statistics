@@ -9,12 +9,8 @@ import numpy as np
 
 st.write('Hello World')
 
-filepath=r'Datasets for IV\60dde6d7-en\QITS-2023-1-EN-20240216T090213.csv'
+filepath='Datasets for IV/modified_trade_data.csv'
 df=pd.read_csv(filepath)
-df=df.drop(columns=['Unit Code', 'Unit', 'PowerCode Code', 'PowerCode',
-       'Reference Period Code', 'Reference Period', 'Flag Codes','Flags'])
-
-df.replace('Korea','South Korea',inplace=True)
 
 def country_to_continent(country_name):
     try:
@@ -26,42 +22,33 @@ def country_to_continent(country_name):
     return country_continent_name
 
 def color_map(z):
-
-    colors = np.zeros((np.size(z),3))  # Not needed.
-    
-    normalize=matplotlib.colors.Normalize(vmin=min(z),vmax=max(z))  # Normalize elevation values to float values between 0 and 1
-
-    # Different custom color_palletes, help from coloors.co
-    color_pallete_1=["#001524","#15616D","#FFECD1","#FF7D00","#FF7D00",'#78290F']  
-    color_pallete_2=['#8ecae6','#219ebc','#023047','#ffb703','#fb8500']  # Best
-    color_pallete_3=["#03045e","#023e8a","#0077b6","#0096c7","#00b4d8","#48cae4","#90e0ef","#ade8f4","#caf0f8"] # bad
-    color_pallete_4=["#006ba6","#0496ff","#ffbc42","#d81159","#8f2d56"] # bad
-
+    normalize=matplotlib.colors.Normalize(vmin=min(z),vmax=max(z))  
+    color_pallete_2=['#8ecae6','#219ebc','#023047','#ffb703','#fb8500']  
     newcolormap=matplotlib.colors.LinearSegmentedColormap.from_list('edge_colormap',color_pallete_2) 
     mapper=matplotlib.cm.ScalarMappable(normalize,newcolormap)  
-
     colors=mapper.to_rgba(z)
     return colors
-
-
-df['Reporter Continent']=df['Reporter country'].apply(country_to_continent)
-df['Partner Continent']=df['Partner country'].apply(country_to_continent)
-
 
 grouped = df.groupby(df.Frequency)
 df_annual = grouped.get_group("Annual")
 df_quarter = grouped.get_group("Quarterly")
 
+freq = st.radio('Please select Freqency.',
+                ['Annual','Quarter'],
+                )
 
+if freq=='Annual':
+    df_plot=df_annual
+elif freq=='Quarter':
+    df_plot=df_quarter
 
+time = st.select_slider('Select timeline',
+                        options=list(df_plot['Time'].unique()))
+flow=st.radio('Please choose the flow type:',
+                ["Exports", "Imports"],
+                captions=['Trade sent by Reporter Country to Partner Country.', 'Trade recieved by Reporter Country from Partner Country.'])
 
-g1=df_annual.groupby(df_annual.Time)
-date=st.radio('Choose the time',list(df_annual.Time.unique()))
-flow='Exports'
-df_annual_t=g1.get_group(date)
-df_annual_plot = df_annual_t[df_annual_t['Flow']==flow]
-
-G = nx.from_pandas_edgelist(df_annual_plot,
+G = nx.from_pandas_edgelist(df_plot,
                             source='Reporter country',
                             target='Partner country',
                             edge_attr='Value',
@@ -73,7 +60,7 @@ COLOR_DIC = {'Oceania': '#0000FF',
             'North America': '#028900',
             'Asia': '#ee4035',
             'South America': '#e86af0',
-            'Unknown': '#000000',
+            'Unknown': '#d6ccc2',
             'Africa': '#ffbf00'}
 
 def continent_color(country):
@@ -83,12 +70,8 @@ def continent_color(country):
      - https://www.designpieces.com/palette/continental-ag-color-palette-hex-and-rgb/
     
     '''
-
-    
     continent = country_to_continent(country)
     return COLOR_DIC[continent]
-
-
 
 
 
@@ -98,23 +81,19 @@ options = {
     'node_size': 800,          # size of node
     'width': 1,                 # line width of edges
     'arrowsize': 18,            # size of arrow
-    'edge_color':color_map(df_annual_plot['Value']),        # edge color
+    'edge_color':color_map(df_plot['Value']),        # edge color
     'label': ['Oceania', 'Europe', 'North America', 'Asia', 'South America','Unknown', 'Africa']
 }
 fig = plt.figure(figsize=(16,16),dpi=400)
-# nx.draw_networkx(G, pos=nx.circular_layout(G),**options)
+nx.draw_networkx(G, pos=nx.circular_layout(G),**options)
 
 option_node_labels={'horizontalalignment' :'left',
                     'verticalalignment' :'center_baseline',
                     'clip_on':True
                     }
 
-
-
-# nx.draw_networkx_labels(G,pos=nx.circular_layout(G),**option_node_labels)
+nx.draw_networkx_labels(G,pos=nx.circular_layout(G),**option_node_labels)
 
 # plt.savefig('testimg.pdf',format='pdf')
-
-
 
 st.pyplot(fig)
