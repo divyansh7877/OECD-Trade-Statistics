@@ -14,3 +14,4 @@
 - https://www.designpieces.com/palette/continental-ag-color-palette-hex-and-rgb/
 - https://design-system.economist.com/documents/CHARTstyleguide_20170505.pdf
 - https://design-system.economist.com/documents/The_Economist_Group_brand_style_guide-Nov-2017.pdf 
+- https://stackoverflow.com/questions/55910004/get-continent-name-from-country-using-pycountry
