@@ -1,4 +1,5 @@
 import matplotlib.cm
+import pycountry_convert as pc
 
 COLOR_DIC = {'Oceania': '#0000FF',
             'Europe': '#A020F0' ,
@@ -29,8 +30,8 @@ def continent_color(country):
 
 def color_map(z):
     normalize=matplotlib.colors.Normalize(vmin=min(z),vmax=max(z))  
-    color_pallete_2=['#8ecae6','#219ebc','#023047','#ffb703','#fb8500']  
-    newcolormap=matplotlib.colors.LinearSegmentedColormap.from_list('edge_colormap',color_pallete_2) 
+    color_pallete=['#8ecae6','#219ebc','#023047','#ffb703','#fb8500']  
+    newcolormap=matplotlib.colors.LinearSegmentedColormap.from_list('edge_colormap',color_pallete) 
     mapper=matplotlib.cm.ScalarMappable(normalize,newcolormap)  
     colors=mapper.to_rgba(z)
-    return colors
+    return colors,mapper
