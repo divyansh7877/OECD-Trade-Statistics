@@ -2,20 +2,15 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
 import networkx as nx
-import altair as alt
-import pycountry_convert as pc
-import matplotlib.cm
-import numpy as np
 
 
-from funcs import country_to_continent,continent_color,color_map
-from funcs import COLOR_DIC
+from funcs import continent_color,color_map
 
 
 
 st.title('International Trade Statistics')
 
-st.write('Hello World')
+st.write('Hello visitor, I have created some visualizations to help you understand the international trades happened between year 2010 and 2023. Please checkout some other visualizations as well!')
 
 filepath='Datasets for IV/modified_trade_data.csv'
 df=pd.read_csv(filepath)

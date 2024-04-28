@@ -9,7 +9,7 @@ COLOR_DIC = {'Oceania': '#0000FF',
             'Unknown': '#d6ccc2',
             'Africa': '#ffbf00'}
 
-def country_to_continent(country_name):
+def country_to_continent(country_name:str) -> str:
     try:
         country_alpha2 = pc.country_name_to_country_alpha2(country_name)
         country_continent_code = pc.country_alpha2_to_continent_code(country_alpha2)
@@ -18,7 +18,7 @@ def country_to_continent(country_name):
         country_continent_name = 'Unknown'
     return country_continent_name
 
-def continent_color(country):
+def continent_color(country:str) -> str:
     '''
     References:
      - https://www.sensationstation.net/uploads/1/1/2/2/112256989/color_by_continent.pdf

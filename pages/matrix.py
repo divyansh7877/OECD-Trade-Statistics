@@ -31,6 +31,7 @@ chart=alt.Chart(source).mark_rect().encode(
     x='Partner country:N',
     y='Reporter country:N',
     color=alt.Color('Value:Q',scale=alt.Scale(scheme='sinebow')),
-    tooltip = ['Value','Flow']
+    tooltip = ['Value','Flow','Reporter country','Partner country']
 )
+
 st.altair_chart(chart, theme="streamlit")
