@@ -59,7 +59,10 @@ options = {
 }
 
 
-fig = plt.figure(figsize=(15,12),dpi=400)
+#fig = plt.figure(figsize=(20,16),dpi=400)
+
+
+fig, axs = plt.subplots(1, 1, figsize=(15,12),dpi = 300)
 nx.draw_networkx(G, pos=nx.circular_layout(G),**options)
 
 option_node_labels={'horizontalalignment' :'left',
@@ -68,6 +71,6 @@ option_node_labels={'horizontalalignment' :'left',
                     }
 
 nx.draw_networkx_labels(G,pos=nx.circular_layout(G),**option_node_labels)
-plt.colorbar(mapper,shrink =0.5)
+fig.colorbar(mapper,shrink =0.5,ax = axs)
 st.pyplot(fig)
 
